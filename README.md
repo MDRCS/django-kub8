@@ -23,7 +23,7 @@
 #### -- Upgrade PIP:
     
     $ pip install pip --upgrade
-s
+
 #### -- Install requirements:
     $ mkdir web & cd web
     $ touch requirments.txt
@@ -41,3 +41,13 @@ s
 #### -- Create Django Project (Inside `web` directory):
 
     $ django-admin startproject django_kub8 .
+
+#### -- Running the webserver using Docker : 
+
+    - Prod Version (Gunicorn):
+
+    $ /opt/venv/bin/gunicorn --worker-tmp-dir /dev/shm django_kub8.wsgi:application --bind "0.0.0.0":${APP_PORT}
+    
+    - Local Version (python3):
+
+    $ python3 manage.py runserver
