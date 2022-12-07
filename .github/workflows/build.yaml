@@ -10,8 +10,8 @@ on:
 
 jobs:
   django_testing_job:
-    uses: MDRCS/django-kub8/blob/main/.github/workflows/ci.yaml@main
-  docker_build:
+    uses: MDRCS/django-kub8/.github/workflows/ci.yaml@main
+  build:
     runs-on: ubuntu-latest
     needs: [django_testing_job]
     steps:
