@@ -8,14 +8,14 @@ python manage.py test
 
 ```
 docker build -f Dockerfile \
-  -t registry.digitalocean.com/cfe-k8s/django-k8s-web:latest 
-  -t registry.digitalocean.com/cfe-k8s/django-k8s-web:v1 
+  -t registry.digitalocean.com/private-registery/django-kub8:latest 
+  -t registry.digitalocean.com/private-registery/django-kub8:v1 
 ```
 
 3. Push Container with 2 tags: latest and random
 
 ```
-docker push registry.digitalocean.com/cfe-k8s/django-k8s-web --all-tags
+docker push registry.digitalocean.com/private-registery/django-kub8 --all-tags
 ```
 
 4. Update secrets (if needed)
@@ -42,7 +42,7 @@ kubectl rollout restart deployment/django-k8s-web-deployment
 
 - Image update:
 ```
-kubectl set image deployment/django-k8s-web-deployment django-k8s-web=registry.digitalocean.com/cfe-k8s/django-k8s-web:latest
+kubectl set image deployment/django-k8s-web-deployment django-k8s-web=registry.digitalocean.com/private-registery/django-kub8:latest
 ```
 
 - Update an Environment Variable (within Deployment yaml):
@@ -59,11 +59,11 @@ env:
 
 Change 
 ```
-image: registry.digitalocean.com/cfe-k8s/django-k8s-web:latest
+image: registry.digitalocean.com/private-registery/django-kub8:latest
 ```
 to
 ```
-image: registry.digitalocean.com/cfe-k8s/django-k8s-web:v1 
+image: registry.digitalocean.com/private-registery/django-kub8:v1 
 ```
 Keep in mind you'll need to change `latest` to any new tag(s) you might have (not just `v1`)
 ```
