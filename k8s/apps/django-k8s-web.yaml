@@ -15,6 +15,7 @@ spec:
       containers:
       - name: django-kub8
         image: registry.digitalocean.com/private-registery/django-kub8:latest
+        imagePullPolicy: Always
         envFrom:
           - secretRef:
               name: django-kub8-prod-env
