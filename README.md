@@ -96,4 +96,76 @@
 
     + go to `Container Registery` -> `private-registery` -> you will be able to find your docker image named `django-kub8`.
 
+### -- Provision a PostgresDB Cluster and link it to out Kubernetes Cluster :
+
+    1- go to databases in digitalocean.com.
+    2- create postgres database cluster.
+    3- click on get started -> choose `django-k8s` kuberenetes cluster to connect to you database cluster.
+    4- by then you can see credentials that will allows you to connect to the database.
+
+    - you can use this command below to migrate an existing database to the one you just created.
+    $ PGPASSWORD=yAnhtNzqbq3YLc88GS pg_restore -U doadmin -h django-kub8-db-postgresql-do-user-13012526-0.b.db.ondigitalocean.com \
+      -p 25060 -d defaultdb <local-pg-dump-path>
+
+#### -- Generate a new secret :
+
+    $ python -c "import secrets; print(secrets.token_urlsafe(32))"
+    2WnhYse2eKvT5NrlEDVQN1KCdJQk1hHSscbQMXO6YLQ
+
+#### -- Create Kub8 Secret based on env.prod file:
+    
+    $ kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
+    $ kubectl get secret
+    django-kub8-prod-env   Opaque      
+
+    - Check data stored in this secret 
+    $ kubectl get secret django-kub8-prod-env -o YAML
+
+#### -- How to use secret in django-kub8 backend app deployment :
+
+    1- after writing deployment for django-kub8 app to mention that this app gonna use 
+       a secret (that we created before look above), where we have env variables (web/.env.prod) for production environment
+
+    you have to mention your Docker registry which is `private-registery`
+    $ kubectl get serviceaccount -o YAML
+    
+    apiVersion: v1
+    items:
+    - apiVersion: v1
+      imagePullSecrets:
+      - name: private-registery
+    
+    in the deployment file for django app
+    ```
+    imagePullSecrets:
+      - name: private-registery
+    ```
+
+    2- by then you can add secret config thought it's name which is it's reference like the example below
+    
+    ```
+      containers:
+      - name: django-kub8
+        image: registry.digitalocean.com/private-registery/django-kub8:latest
+      * envFrom:
+      *   - secretRef:
+      *       name: django-kub8-prod-env
+    ```
+    
+    3- finally, you can apply changes 
+    $ kubectl apply -f k8s/apps/django-k8s-web.yaml
+    
+
+#### -- To get into a pod is deployed container :
+    
+    $ kubectl get pods
+    django-kub8-deployment-6d4fd679f8-8q469
+    
+    $ kubectl exec -it django-kub8-deployment-6d4fd679f8-8q469 -- /bin/bash
+
+    
+#### -- Logs & Troubleshooting Kubernetes  
+
+    $ kubectl logs <pod_name>
+
     

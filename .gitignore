@@ -112,6 +112,7 @@ venv.bak/
 
 # sensitive data
 # web/.env
+# web/.env.prod
 
 # Spyder project settings
 .spyderproject
@@ -139,4 +140,4 @@ dmypy.json
 .idea/
 
 # Kubernetes
-.kub
+.kub/

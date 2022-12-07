@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-kub8-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django-kub8-deployment
+  template:
+    metadata:
+      labels:
+        app: django-kub8-deployment
+    spec:
+      containers:
+      - name: django-kub8
+        image: registry.digitalocean.com/private-registery/django-kub8:latest
+        envFrom:
+          - secretRef:
+              name: django-kub8-prod-env
+        env:
+          - name: PORT
+            value: "8001"
+        ports:
+        - containerPort: 8001
+      imagePullSecrets:
+        - name: private-registery
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-kub8-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8001
+  selector:
+    app: django-kub8-deployment
