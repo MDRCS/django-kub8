@@ -1,0 +1,17 @@
+name: Build Docker Container & Push to The Registry
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test_django:
+    uses: MDRCS/django-kub8/blob/main/.github/workflows/ci.yaml@main
+  docker_build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
