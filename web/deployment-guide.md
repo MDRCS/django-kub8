@@ -37,12 +37,12 @@ Add in a rollout strategy:
 Given a `imagePullPolicy: Always`, on your containers you can:
 
 ```
-kubectl rollout restart deployment/django-k8s-web-deployment
+kubectl rollout restart deployment/django-kub8-deployment
 ```
 
 - Image update:
 ```
-kubectl set image deployment/django-k8s-web-deployment django-k8s-web=registry.digitalocean.com/private-registery/django-kub8:latest
+kubectl set image deployment/django-kub8-deployment django-k8s-web=registry.digitalocean.com/private-registery/django-kub8:latest
 ```
 
 - Update an Environment Variable (within Deployment yaml):
@@ -73,18 +73,18 @@ kubectl apply -f k8s/apps/django-k8s-web.yaml
 
 6. Roll Update:
 ```
-kubectl rollout status deployment/django-k8s-web-deployment
+kubectl rollout status deployment/django-kub8-deployment
 ```
 7. Migrate database
 
 Get a single pod (either method works)
 
 ```
-export SINGLE_POD_NAME=$(kubectl get pod -l app=django-k8s-web-deployment -o jsonpath="{.items[0].metadata.name}")
+export SINGLE_POD_NAME=$(kubectl get pod -l app=django-kub8-deployment -o jsonpath="{.items[0].metadata.name}")
 ```
 or 
 ```
-export SINGLE_POD_NAME=$(kubectl get pod -l=app=django-k8s-web-deployment -o NAME | tail -n 1)
+export SINGLE_POD_NAME=$(kubectl get pod -l=app=django-kub8-deployment -o NAME | tail -n 1)
 ```
 
 Then run `migrate.sh` 
