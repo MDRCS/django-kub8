@@ -22,7 +22,7 @@ docker push registry.digitalocean.com/private-registery/django-kub8 --all-tags
 
 ```
 kubectl delete secret django-kub8-prod-env
-kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
+kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod (e.g .env.prod.local)
 
 ```
 

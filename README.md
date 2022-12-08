@@ -114,7 +114,7 @@
 
 #### -- Create Kub8 Secret based on env.prod file:
     
-    $ kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
+    $ kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod (e.g .env.prod.local)
     $ kubectl get secret
     django-kub8-prod-env   Opaque      
 
@@ -124,7 +124,7 @@
 #### -- How to use secret in django-kub8 backend app deployment :
 
     1- after writing deployment for django-kub8 app to mention that this app gonna use 
-       a secret (that we created before look above), where we have env variables (web/.env.prod) for production environment
+       a secret (that we created before look above), where we have env variables (web/.env.prod.local) for production environment
 
     you have to mention your Docker registry which is `private-registery`
     $ kubectl get serviceaccount -o YAML
@@ -199,9 +199,12 @@
         POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
         EOF
         kubectl delete secret django-kub8-prod-env
-        kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
+        kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod (e.g .env.prod.local)
     ```
 
     + All secrets should be stored in github secrets.
       Ref: https://github.com/MDRCS/django-kub8/settings/secrets/actions
 
+#### - Create CDN for staticfiles Management :
+
+    1- go to `spaces`
