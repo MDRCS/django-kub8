@@ -61,8 +61,8 @@
     5- determine the path of your `django-k8s-kubeconfig.yaml` file.
     6- go to your own terminal -> 
         $ export KUBECONFIG=~/Desktop/django-kub8/.kub/django-k8s-kubeconfig.yaml
-    
-    7- now you have access to your kubernetes cluster nodes : 
+    **7- doctl kubernetes cluster kubeconfig save django-k8s
+    8- now you have access to your kubernetes cluster nodes : 
     
     $ kubectl get nodes
     

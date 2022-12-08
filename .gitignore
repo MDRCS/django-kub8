@@ -140,4 +140,4 @@ dmypy.json
 .idea/
 
 # Kubernetes
-.kub/
+# .kub/
