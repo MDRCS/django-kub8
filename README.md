@@ -168,4 +168,40 @@
 
     $ kubectl logs <pod_name>
 
+#### -- Make a Github Actions workflow job depends on other one :
     
+    '''
+    jobs:
+      django_testing_job:
+        uses: MDRCS/django-kub8/.github/workflows/ci.yaml@main
+      build:
+        runs-on: ubuntu-latest
+        needs: [django_testing_job]
+    '''
+
+    + for the `build` to start running we should have validated `django_testing_job` ci pipeline successfuly.
+
+#### -- Create Env file in the ci pipeline environment and create secret based on it :
+
+    ```
+     - name: Update deployment secrets
+      run: |
+        cat << EOF >> web/.env.prod
+        DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+        DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+        DJANGO_SUERPUSER_EMAIL=${{ secrets.DJANGO_SUERPUSER_EMAIL }}
+        DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+        ENV_ALLOWED_HOST=${{ secrets.ENV_ALLOWED_HOST }}
+        POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+        POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+        POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+        EOF
+        kubectl delete secret django-kub8-prod-env
+        kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
+    ```
+
+    + All secrets should be stored in github secrets.
+      Ref: https://github.com/MDRCS/django-kub8/settings/secrets/actions
+
