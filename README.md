@@ -10,7 +10,7 @@
 - Doctl
 
 
-### % Kickst*art the project* 
+### % Kickstart the project* 
 
 #### -- Create django project env:
 
@@ -140,6 +140,11 @@
     imagePullSecrets:
       - name: private-registery
     ```
+    
+    2-1 sometimes we can get a secrets name different than waht is showed in container registery as name
+        so to make sure the name is exactly the same :
+
+    $  kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "private-registry"}]}'
 
     2- by then you can add secret config thought it's name which is it's reference like the example below
     
@@ -155,6 +160,9 @@
     3- finally, you can apply changes 
     $ kubectl apply -f k8s/apps/django-k8s-web.yaml
     
+    NOTE: 
+     kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "private-registry"}]}'
+
 
 #### -- To get into a pod is deployed container :
     
