@@ -112,7 +112,7 @@ venv.bak/
 
 # sensitive data
 # web/.env
-# web/.env.prod
+# web/.env.prod.local
 
 # Spyder project settings
 .spyderproject
