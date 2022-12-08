@@ -215,4 +215,18 @@
 
 #### - Create CDN for staticfiles Management :
 
-    1- go to `spaces`
+    1- go to `spaces` create one
+    2- go to django settings file and add :
+        STATIC_ROOT = BASE_DIR / "staticfiles"
+    3- Create `cdn` folder under project directory `django_kub8`
+    4- add env variables for s3 aws access in conf.py
+    5- do backend settings to define location where we gonna store each media content.
+    6- go to `spaces -> manage keys -> Spaces access keys (at the bottom)` and try to generate a token then set those variables below in github env variables to be accessable by 
+        CI pipeline.       
+
+    ```
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    ```
+
+    
