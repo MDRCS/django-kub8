@@ -62,7 +62,7 @@ jobs:
     - name: Wait for rollout to finish
       run: |
         kubectl rollout status deployment/django-kub8-deployment
-    - name: Migrate database Command
+    - name: Post-build Django Commands - Migrate / Collectstatic
       run: |
         export SINGLE_POD_NAME=$(kubectl get pod -l=app=django-kub8-deployment -o NAME | tail -n 1)
         kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh
