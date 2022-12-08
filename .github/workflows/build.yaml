@@ -43,7 +43,7 @@ jobs:
         cat << EOF >> web/.env.prod
         DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
         DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-        DJANGO_SUERPUSER_EMAIL=${{ secrets.DJANGO_SUERPUSER_EMAIL }}
+        DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
         DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
         ENV_ALLOWED_HOST=${{ secrets.ENV_ALLOWED_HOST }}
         POSTGRES_DB=${{ secrets.POSTGRES_DB }}
@@ -52,6 +52,7 @@ jobs:
         POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
         POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
         EOF
+        cat web/.env.prod
         kubectl delete secret django-kub8-prod-env
         kubectl create secret generic django-kub8-prod-env --from-env-file=web/.env.prod
     - name: Update Deployment Image
