@@ -234,4 +234,11 @@
 
     $ docker run --name localhost -p 5434:5434 -e POSTGRES_USER=postgres_user -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=django_db -d postgres
 
+#### --noinput :
+
+    e.g python manage.py collectstatic --noinput
+    
+    Using --noinput is so you don't have to confirm you may override the files that are already in DO Spaces. This command is also ideal so you can setup     Django for Github Actions as well.
+
+
     
