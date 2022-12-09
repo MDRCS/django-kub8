@@ -229,4 +229,9 @@
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
     ```
 
+
+#### - Annexe - Command to run Postgres Container
+
+    $ docker run --name localhost -p 5434:5434 -e POSTGRES_USER=postgres_user -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=django_db -d postgres
+
     
